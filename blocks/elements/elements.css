@@ -7,5 +7,6 @@
 @media screen  and (max-width: 767px) {
   .elements {
     max-width: 282px;
+    padding: 36px 0 0;
   }
 }
