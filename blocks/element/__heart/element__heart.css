@@ -1,0 +1,29 @@
+.element__heart {
+  box-shadow: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  background-image: url(../../../images/heart_disabled.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 22px;
+  /* я не знаю какое свойство у button нужно изменить
+  чтобы при клике на нее она не смещалась вверх
+  поэтому высоту поставил больше чем в макете
+  иначе "сердце" обрезается по верху*/
+  height: 27px;
+}
+
+.element__heart:hover {
+  background-image: url(../../../images/heart_hover.svg);
+  cursor: pointer;
+  opacity: .5;
+}
+
+.element__heart:active {
+  background-image: url(../../../images/heart_active.svg);
+  opacity: 1;
+  margin-left:-2px;
+  padding-left:4px;
+}
