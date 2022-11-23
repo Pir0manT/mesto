@@ -10,7 +10,6 @@
 }
 
 .element__heart:hover {
-  background: #fff url(../../../images/heart_hover.svg) no-repeat center;
   cursor: pointer;
   opacity: .5;
 }
