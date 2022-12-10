@@ -1,3 +1,7 @@
+//************************************
+//           переменные             //
+//************************************
+
 // Картинки по умолчанию
 const initialElements = [
   {name: 'Казань', link: 'https://sf.top61.ru/f/4cc317aad9034adba823/?dl=1'},
@@ -12,20 +16,47 @@ const initialElements = [
 const elementsList = document.querySelector(".elements__grid");
 const elementTemplate = document.querySelector(".element-template").content;
 
+// попапы
+const modalElementImage = document.querySelector(".popup_type_open-image");
+const modalProfileEdit = document.querySelector(".popup_type_edit-profile");
+const modalAddElement = document.querySelector(".popup_type_add-element");
+
 // открытая картинка
 const popupOpenPhoto = document.querySelector(".popup__open-photo");
 const popupOpenSubtitle = document.querySelector(".popup__open-photo-subtitle");
-const imageElementModal = document.querySelector(".popup_type_open-card");
+
 
 //кнопки
-const closeImageElement = imageElementModal.querySelector(".popup__close");
+const btnCloseImage = modalElementImage.querySelector(".popup__close");
+const btnOpenProfileEditModal = document.querySelector(".profile__edit-button");
+const btnCancelProfileEdit = modalProfileEdit.querySelector(".popup__close");
+const btnAddElement = document.querySelector(".profile__add-button");
+const btnCancelAddElement = modalAddElement.querySelector(".popup__close");
 
-// открытие и закрытие попапов
+// профиль
+const profileTitle = document.querySelector(".profile__title");
+const profileSubtitle = document.querySelector(".profile__subtitle");
+
+// поля ввода
+const inputProfileName = modalProfileEdit.querySelector(".popup__input_type_name");
+const inputProfileJob = modalProfileEdit.querySelector(".popup__input_type_job");
+const inputElementName = modalAddElement.querySelector(".popup__input_type_element-name");
+const inputElementLink = modalAddElement.querySelector(".popup__input_type_element-link");
+
+//формы
+const formProfileEdit = modalProfileEdit.querySelector(".popup__form");
+const formAddElement = modalAddElement.querySelector('.popup__form');
+
+//************************************
+//            функции               //
+//************************************
+
+// открывает и закрывает попапы, возвращает false - закрыт, true - открыт
 function toggleModal(modal) {
-  modal.classList.toggle("popup_opened");
+  return modal.classList.toggle("popup_opened");
 }
 
-// создание Node картинки из переданного объекта
+// возвращает Node картинки по шаблону из переданного объекта
 function createElement(item) {
   const element = elementTemplate.cloneNode(true);
   const [deleteButton,elementImage,elementTitle,heartButton] = element.querySelectorAll('.element__delete,.element__image,.element__title,.element__heart');
@@ -40,48 +71,54 @@ function createElement(item) {
     popupOpenPhoto.src = item.link;
     popupOpenPhoto.alt = item.name;
     popupOpenSubtitle.textContent = item.name;
-    toggleModal(imageElementModal)
+    toggleModal(modalElementImage)
   })
-
 
   return element;
 }
 
+//************************************
+//      обработчики событий         //
+//************************************
+
+// открытие формы редактирования профиля
+btnOpenProfileEditModal.addEventListener("click", () => {
+  inputProfileName.value = profileTitle.textContent;
+  inputProfileJob.value = profileSubtitle.textContent;
+  toggleModal(modalProfileEdit);
+});
+
+//сохранение данных из формы редактирования профиля
+formProfileEdit.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  profileTitle.textContent = inputProfileName.value;
+  profileSubtitle.textContent = inputProfileJob.value;
+  toggleModal(modalProfileEdit);
+});
+
+// закрытие открытой картинки
+btnCloseImage.addEventListener("click", () => toggleModal(modalElementImage));
+
+// закрытие без сохранения формы редактирования профиля
+btnCancelProfileEdit.addEventListener("click", () => toggleModal(modalProfileEdit));
+
+// открытие формы добавления элемента
+btnAddElement.addEventListener('click', () => toggleModal(modalAddElement));
+
+// закрытие без сохранения формы добавления элемента
+btnCancelAddElement.addEventListener('click', () => toggleModal(modalAddElement));
+
+// добавленние элемента из данных, введенных в форму; закрытие формы
+formAddElement.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  elementsList.prepend(createElement({name: inputElementName.value, link: inputElementLink.value}));
+  formAddElement.reset();
+  toggleModal(modalAddElement);
+})
+
+//************************************
+//      отрисовка страницы          //
+//************************************
+
 // отрисовка картинок
 elementsList.append(...initialElements.map(createElement));
-
-// обработчики событий
-closeImageElement.addEventListener("click", () => toggleModal(imageElementModal));
-
-
-const popupOpenButton = document.querySelector('.profile__edit-button');
-const popupCloseButton = document.querySelector('.popup__close');
-const popup = document.querySelector('.popup');
-let formElement = document.querySelector('.popup__form');
-let nameInput = document.querySelector('.popup__input_type_name');
-let jobInput = document.querySelector('.popup__input_type_job');
-let profileTitle = document.querySelector('.profile__title');
-let profileSubtitle = document.querySelector('.profile__subtitle');
-
-function openPopup() {
-  nameInput.value = profileTitle.textContent;
-  jobInput.value = profileSubtitle.textContent;
-  popup.classList.add('popup_opened');
-
-}
-
-function closePopup() {
-  popup.classList.remove('popup_opened');
-}
-
-function formSubmitHandler(evt) {
-  evt.preventDefault();
-  profileTitle.textContent = nameInput.value;
-  profileSubtitle.textContent = jobInput.value;
-  closePopup();
-}
-
-popupOpenButton.addEventListener('click', openPopup);
-popupCloseButton.addEventListener('click', closePopup);
-
-formElement.addEventListener('submit', formSubmitHandler);

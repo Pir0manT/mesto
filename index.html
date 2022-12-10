@@ -34,7 +34,8 @@
   <footer class="footer">
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
-  <div class="popup">
+
+  <div class="popup  popup_type_edit-profile">
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__form" name="edit" novalidate>
@@ -47,13 +48,30 @@
       <button class="popup__close link-opacity" aria-label="закрыть" type="button"></button>
     </div>
   </div>
-  <div class="popup popup_type_open-card">
+
+  <div class="popup popup_type_open-image">
     <div class="popup__container-open">
       <button class="popup__close link-opacity" aria-label="закрыть" type="button"></button>
       <img class="popup__open-photo" src="" alt="изображение">
       <p class="popup__open-photo-subtitle"></p>
     </div>
   </div>
+
+  <div class="popup popup_type_add-element">
+    <div class="popup__container">
+      <h2 class="popup__title">Новое место</h2>
+      <form class="popup__form" name="addcard" novalidate>
+        <input class="popup__input popup__input_type_element-name" type="text" placeholder="Название"
+               id="element-name" name="element-name" required>
+        <input class="popup__input popup__input_type_element-link" type="text" placeholder="Ссылка на картинку"
+               id="element-link" name="element-link" required>
+        <button class="popup__save popup__create-element" type="submit">Сохранить</button>
+      </form>
+      <button class="popup__close link-opacity" aria-label="закрыть" type="button"></button>
+    </div>
+  </div>
+
+
   <template class="element-template">
     <li class="element">
       <button class="element__delete link-opacity" type="button" aria-label="удалить"></button>
@@ -64,6 +82,7 @@
       </div>
     </li>
   </template>
+
   <script src="./scripts/index.js"></script>
 </body>
 </html>
