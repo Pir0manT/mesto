@@ -28,14 +28,14 @@ const popupOpenSubtitle = document.querySelector(".popup__open-photo-subtitle");
 
 //кнопки
 const btnCloseImage = modalElementImage.querySelector(".popup__close");
-const btnOpenProfileEditModal = document.querySelector(".profile__edit-button");
+const btnOpenProfileEdit = document.querySelector(".profile__edit-button");
 const btnCancelProfileEdit = modalProfileEdit.querySelector(".popup__close");
-const btnAddElement = document.querySelector(".profile__add-button");
+const btnOpenAddElement = document.querySelector(".profile__add-button");
 const btnCancelAddElement = modalAddElement.querySelector(".popup__close");
 
 // профиль
-const profileTitle = document.querySelector(".profile__title");
-const profileSubtitle = document.querySelector(".profile__subtitle");
+const profileName = document.querySelector(".profile__title");
+const profileJob = document.querySelector(".profile__subtitle");
 
 // поля ввода
 const inputProfileName = modalProfileEdit.querySelector(".popup__input_type_name");
@@ -51,9 +51,14 @@ const formAddElement = modalAddElement.querySelector('.popup__form');
 //            функции               //
 //************************************
 
-// открывает и закрывает попапы, возвращает false - закрыт, true - открыт
-function toggleModal(modal) {
-  return modal.classList.toggle("popup_opened");
+// открывает popup
+function openModalWindow(modalWindow) {
+  modalWindow.classList.add('popup_opened')
+}
+
+// закрывает popup
+function closeModalWindow(modalWindow) {
+  modalWindow.classList.remove('popup_opened')
 }
 
 // возвращает Node картинки по шаблону из переданного объекта
@@ -71,7 +76,7 @@ function createElement(item) {
     popupOpenPhoto.src = item.link;
     popupOpenPhoto.alt = item.name;
     popupOpenSubtitle.textContent = item.name;
-    toggleModal(modalElementImage)
+    openModalWindow(modalElementImage)
   })
 
   return element;
@@ -82,38 +87,38 @@ function createElement(item) {
 //************************************
 
 // открытие формы редактирования профиля
-btnOpenProfileEditModal.addEventListener("click", () => {
-  inputProfileName.value = profileTitle.textContent;
-  inputProfileJob.value = profileSubtitle.textContent;
-  toggleModal(modalProfileEdit);
+btnOpenProfileEdit.addEventListener("click", () => {
+  inputProfileName.value = profileName.textContent;
+  inputProfileJob.value = profileJob.textContent;
+  openModalWindow(modalProfileEdit);
 });
 
 //сохранение данных из формы редактирования профиля
 formProfileEdit.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  profileTitle.textContent = inputProfileName.value;
-  profileSubtitle.textContent = inputProfileJob.value;
-  toggleModal(modalProfileEdit);
+  profileName.textContent = inputProfileName.value;
+  profileJob.textContent = inputProfileJob.value;
+  closeModalWindow(modalProfileEdit);
 });
 
 // закрытие открытой картинки
-btnCloseImage.addEventListener("click", () => toggleModal(modalElementImage));
+btnCloseImage.addEventListener("click", () => closeModalWindow(modalElementImage));
 
 // закрытие без сохранения формы редактирования профиля
-btnCancelProfileEdit.addEventListener("click", () => toggleModal(modalProfileEdit));
+btnCancelProfileEdit.addEventListener("click", () => closeModalWindow(modalProfileEdit));
 
 // открытие формы добавления элемента
-btnAddElement.addEventListener('click', () => toggleModal(modalAddElement));
+btnOpenAddElement.addEventListener('click', () => openModalWindow(modalAddElement));
 
 // закрытие без сохранения формы добавления элемента
-btnCancelAddElement.addEventListener('click', () => toggleModal(modalAddElement));
+btnCancelAddElement.addEventListener('click', () => closeModalWindow(modalAddElement));
 
 // добавленние элемента из данных, введенных в форму; закрытие формы
 formAddElement.addEventListener('submit', (evt) => {
   evt.preventDefault();
   elementsList.prepend(createElement({name: inputElementName.value, link: inputElementLink.value}));
   formAddElement.reset();
-  toggleModal(modalAddElement);
+  closeModalWindow(modalAddElement);
 })
 
 //************************************

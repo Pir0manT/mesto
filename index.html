@@ -38,7 +38,7 @@
   <div class="popup  popup_type_edit-profile">
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form class="popup__form" name="edit" novalidate>
+      <form class="popup__form" name="edit">
         <input class="popup__input popup__input_type_name" type="text" placeholder="Ваше имя" id="name" name="name"
                minlength="2" maxlength="40" required>
         <input class="popup__input popup__input_type_job" type="text" placeholder="Немного о себе" id="description"
@@ -60,11 +60,11 @@
   <div class="popup popup_type_add-element">
     <div class="popup__container">
       <h2 class="popup__title">Новое место</h2>
-      <form class="popup__form" name="addcard" novalidate>
-        <input class="popup__input popup__input_type_element-name" type="text" placeholder="Название"
-               id="element-name" name="element-name" required>
-        <input class="popup__input popup__input_type_element-link" type="text" placeholder="Ссылка на картинку"
-               id="element-link" name="element-link" required>
+      <form class="popup__form" name="addcard">
+        <input class="popup__input popup__input_type_element-name" required type="text" placeholder="Название"
+               id="element-name" name="element-name">
+        <input class="popup__input popup__input_type_element-link" required type="text" placeholder="Ссылка на картинку"
+               id="element-link" name="element-link" >
         <button class="popup__save popup__create-element" type="submit">Сохранить</button>
       </form>
       <button class="popup__close link-opacity" aria-label="закрыть" type="button"></button>
