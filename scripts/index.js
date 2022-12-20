@@ -2,16 +2,6 @@
 //           переменные             //
 //************************************
 
-// Картинки по умолчанию
-const initialElements = [
-  {name: 'Казань', link: 'https://sf.top61.ru/f/4cc317aad9034adba823/?dl=1'},
-  {name: 'Озеро Байкал', link: 'https://sf.top61.ru/f/84068d4533584dff9411/?dl=1'},
-  {name: 'Калининград', link: 'https://sf.top61.ru/f/d74736b16b0e419ea742/?dl=1'},
-  {name: 'Ладожское озеро', link: 'https://sf.top61.ru/f/8348db34c3654aae90bf/?dl=1'},
-  {name: 'Ростов-на-Дону', link: 'https://sf.top61.ru/f/2bdc20bbb5c44f0d8c4e/?dl=1'},
-  {name: 'Владивосток', link: 'https://sf.top61.ru/f/8adca8203ba74e92b00e/?dl=1'}
-]
-
 // Добавление картинок
 const elementsList = document.querySelector(".elements__grid")
 const elementTemplate = document.querySelector(".element-template").content
@@ -68,12 +58,6 @@ function openModalWindow(modalWindow) {
 function closeModalWindow(modalWindow) {
   modalWindow.classList.remove('popup_opened')
   document.removeEventListener('keydown', closePopupByEsc)
-  modalWindow.querySelectorAll('.popup__input_type_error')
-    .forEach(inputElement => inputElement.classList.remove('popup__input_type_error'))
-  modalWindow.querySelectorAll('.popup__error_visible')
-    .forEach(errorElement => errorElement.classList.remove('popup__error_visible'))
-  modalWindow.querySelectorAll('.popup__form')
-    .forEach(formElement => formElement.reset())
 }
 
 // возвращает Node картинки по шаблону из переданного объекта
@@ -103,9 +87,10 @@ function createElement(item) {
 
 // открытие формы редактирования профиля
 btnOpenProfileEdit.addEventListener("click", () => {
-  const evt = new Event('input')
+  resetFormCondition(modalProfileEdit)
   inputProfileName.value = profileName.textContent
   inputProfileJob.value = profileJob.textContent
+  const evt = new Event('input')
   inputProfileName.dispatchEvent(evt)
   inputProfileJob.dispatchEvent(evt)
   openModalWindow(modalProfileEdit)
@@ -127,7 +112,8 @@ btnCancelProfileEdit.addEventListener("click", () => closeModalWindow(modalProfi
 
 // открытие формы добавления элемента
 btnOpenAddElement.addEventListener('click', () => {
-  modalAddElement.querySelector('.popup__save').classList.add('popup__save_disabled')
+  resetFormCondition(modalAddElement)
+  disableSubmitButton(modalAddElement)
   openModalWindow(modalAddElement)
 });
 
@@ -138,7 +124,6 @@ btnCancelAddElement.addEventListener('click', () => closeModalWindow(modalAddEle
 formAddElement.addEventListener('submit', (evt) => {
   evt.preventDefault()
   elementsList.prepend(createElement({name: inputElementName.value, link: inputElementLink.value}))
-  formAddElement.reset()
   closeModalWindow(modalAddElement)
 })
 
