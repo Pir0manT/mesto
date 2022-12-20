@@ -98,7 +98,6 @@ btnOpenProfileEdit.addEventListener("click", () => {
 
 //сохранение данных из формы редактирования профиля
 formProfileEdit.addEventListener('submit', (evt) => {
-  evt.preventDefault()
   profileName.textContent = inputProfileName.value
   profileJob.textContent = inputProfileJob.value
   closeModalWindow(modalProfileEdit)
@@ -122,7 +121,6 @@ btnCancelAddElement.addEventListener('click', () => closeModalWindow(modalAddEle
 
 // добавленние элемента из данных, введенных в форму; закрытие формы
 formAddElement.addEventListener('submit', (evt) => {
-  evt.preventDefault()
   elementsList.prepend(createElement({name: inputElementName.value, link: inputElementLink.value}))
   closeModalWindow(modalAddElement)
 })
