@@ -45,12 +45,11 @@ class FormValidator {
 
  // скрыть ошибки валидации, очистить содержимое инпутов
   resetValidation = (clearInputValue = true) => {
-    this._toggleButtonState();
     this._inputList.forEach((inputElement) => {
       if (clearInputValue) {inputElement.value =''}
       this._hideInputError(inputElement)
     });
-
+    this._toggleButtonState();
   }
 
 
