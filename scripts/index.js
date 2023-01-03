@@ -3,7 +3,8 @@
 //************************************
 
 import {
-  initialElements
+  initialElements,
+  validationConfig
 } from './constants.js'
 
 import {
@@ -11,9 +12,7 @@ import {
 } from './Card.js'
 
 import {
-  FormValidator,
-  validationConfig,
-  resetFormCondition
+  FormValidator
 } from './FormValidator.js'
 
 //************************************
@@ -22,7 +21,7 @@ import {
 
 // Добавление картинок
 const elementsList = document.querySelector(".elements__grid")
-const elementTemplate = document.querySelector(".element-template").content
+// const elementTemplate = document.querySelector(".element-template")
 
 // попапы
 const modalElementImage = document.querySelector(".popup_type_open-image")
@@ -35,11 +34,9 @@ const popupOpenSubtitle = document.querySelector(".popup__open-photo-subtitle")
 
 
 //кнопки
-const btnCloseImage = modalElementImage.querySelector(".popup__close")
 const btnOpenProfileEdit = document.querySelector(".profile__edit-button")
-const btnCancelProfileEdit = modalProfileEdit.querySelector(".popup__close")
 const btnOpenAddElement = document.querySelector(".profile__add-button")
-const btnCancelAddElement = modalAddElement.querySelector(".popup__close")
+const buttonCloseList = document.querySelectorAll('.popup__close');
 
 // профиль
 const profileName = document.querySelector(".profile__title")
@@ -92,21 +89,30 @@ function handleElementClick(name, link) {
 
 // возвращает Node картинки по шаблону из переданного объекта
 function createElement(item) {
-  return new Card(item, elementTemplate, handleElementClick).getElement()
+  return new Card(item, '.element-template', handleElementClick).getElement()
 }
 
 //************************************
 //      обработчики событий         //
 //************************************
 
+// закрытие любого из имеющихся popup
+buttonCloseList.forEach(btn => {
+  const popup = btn.closest('.popup');
+  popup.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains("popup")){
+    closeModalWindow(popup)
+  }
+});
+  btn.addEventListener('click', () => closeModalWindow(popup));
+})
+
 // открытие формы редактирования профиля
 btnOpenProfileEdit.addEventListener("click", () => {
-  resetFormCondition(modalProfileEdit)
+  // resetFormCondition(modalProfileEdit)
   inputProfileName.value = profileName.textContent
   inputProfileJob.value = profileJob.textContent
-  const evt = new Event('input')
-  inputProfileName.dispatchEvent(evt)
-  inputProfileJob.dispatchEvent(evt)
+  validationProfileEdit.resetValidation(false)
   openModalWindow(modalProfileEdit)
 });
 
@@ -117,33 +123,18 @@ formProfileEdit.addEventListener('submit', () => {
   closeModalWindow(modalProfileEdit)
 });
 
-// закрытие открытой картинки
-btnCloseImage.addEventListener("click", () => closeModalWindow(modalElementImage))
-
-// закрытие без сохранения формы редактирования профиля
-btnCancelProfileEdit.addEventListener("click", () => closeModalWindow(modalProfileEdit))
 
 // открытие формы добавления элемента
 btnOpenAddElement.addEventListener('click', () => {
-  resetFormCondition(modalAddElement)
-  validationAddElement.disableSubmitButton()
+  validationAddElement.resetValidation()
   openModalWindow(modalAddElement)
 });
 
-// закрытие без сохранения формы добавления элемента
-btnCancelAddElement.addEventListener('click', () => closeModalWindow(modalAddElement))
 
 // добавление элемента из данных, введенных в форму; закрытие формы
 formAddElement.addEventListener('submit', () => {
   elementsList.prepend(createElement({name: inputElementName.value, link: inputElementLink.value}))
   closeModalWindow(modalAddElement)
-})
-
-// закрытие popup кликом по overlay
-document.addEventListener('mousedown', evt => {
-  if (evt.target.classList.contains("popup")){
-    closeModalWindow(document.querySelector(".popup_opened"))
-  }
 })
 
 //************************************

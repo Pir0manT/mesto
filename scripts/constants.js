@@ -13,6 +13,14 @@ const initialElements = [
   {name: 'Владивосток', link: 'https://sf.top61.ru/f/8adca8203ba74e92b00e/?dl=1'}
 ]
 
+const validationConfig = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__save",
+  inactiveButtonClass: "popup__save_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__error_visible",
+}
 
 
 //************************************
@@ -20,5 +28,6 @@ const initialElements = [
 //************************************
 
 export {
-  initialElements
+  initialElements,
+  validationConfig
 }

@@ -22,8 +22,8 @@ class FormValidator {
   }
   // скрыть ошибки
   _hideInputError = (inputElement) => {
+    inputElement.classList.remove(this._settings.inputErrorClass)
     const errorElement = this._form.querySelector(`.${inputElement.id}-error`)
-    inputElement.classList.remove(this._settings.inputErrorClas)
     errorElement.textContent = ''
     errorElement.classList.remove(this._settings.errorClass)
   }
@@ -43,11 +43,18 @@ class FormValidator {
     )
  }
 
- disableSubmitButton = () => {
-   this._buttonSubmit.classList.add(this._settings.inactiveButtonClass)
- }
+ // скрыть ошибки валидации, очистить содержимое инпутов
+  resetValidation = (clearInputValue = true) => {
+    this._toggleButtonState();
+    this._inputList.forEach((inputElement) => {
+      if (clearInputValue) {inputElement.value =''}
+      this._hideInputError(inputElement)
+    });
 
- // включение валидации в
+  }
+
+
+  // включение валидации в
  enableValidation = () => {
    this._form.addEventListener('submit', evt => evt.preventDefault())
    this._inputList.forEach(inputElement => inputElement.addEventListener('input', () => {
@@ -57,39 +64,11 @@ class FormValidator {
  }
 }
 
-//************************************
-//            переменные            //
-//************************************
-
-const validationConfig = {
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__save",
-  inactiveButtonClass: "popup__save_disabled",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__error_visible",
-}
-
-//************************************
-//             функции              //
-//************************************
-
-//очистка полей ввода и удаление ошибок валидации
-function resetFormCondition(modalWindow) {
-  modalWindow.querySelectorAll('.popup__input_type_error')
-    .forEach(inputElement => inputElement.classList.remove('popup__input_type_error'))
-  modalWindow.querySelectorAll('.popup__error_visible')
-    .forEach(errorElement => errorElement.classList.remove('popup__error_visible'))
-  modalWindow.querySelectorAll('.popup__form')
-    .forEach(formElement => formElement.reset())
-}
 
 //************************************
 //             Экспорт              //
 //************************************
 
 export {
-  FormValidator,
-  validationConfig,
-  resetFormCondition
+  FormValidator
 }

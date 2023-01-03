@@ -6,7 +6,7 @@
 class Card {
   constructor(data, template, handleClick) {
     this._data        = data
-    this._template    = template
+    this._template    = document.querySelector(template).content
     this._handleClick = handleClick
   }
 
@@ -17,10 +17,19 @@ class Card {
     this._elementTitle.textContent = this._data.name
   }
 
+  _toggleLike = () => {
+    this._buttonLike.classList.toggle('element__heart-active')
+}
+
+  _delete = () => {
+    this._buttonDelete.closest('.element').remove()
+    this._element.remove()
+    this._element = null
+  }
   // подписка на события
   _setEventListeners = () => {
-    this._buttonDelete.addEventListener('click', evt => evt.target.closest('.element').remove())
-    this._buttonLike.addEventListener('click', evt => evt.target.closest('.element__heart').classList.toggle('element__heart-active'))
+    this._buttonDelete.addEventListener('click', () => this._delete())
+    this._buttonLike.addEventListener('click', () => this._toggleLike() )
     this._elementImage.addEventListener('click', () => this._handleClick(this._data.name, this._data.link))
   }
 
