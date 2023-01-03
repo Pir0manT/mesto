@@ -10,6 +10,12 @@ import {
   Card
 } from './Card.js'
 
+import {
+  FormValidator,
+  validationConfig,
+  resetFormCondition
+} from './FormValidator.js'
+
 //************************************
 //           переменные             //
 //************************************
@@ -49,6 +55,10 @@ const inputElementLink = modalAddElement.querySelector(".popup__input_type_eleme
 const formProfileEdit = modalProfileEdit.querySelector(".popup__form")
 const formAddElement = modalAddElement.querySelector('.popup__form')
 
+//валидаторы форм
+const validationProfileEdit = new FormValidator(validationConfig, formProfileEdit)
+const validationAddElement  = new FormValidator(validationConfig, formAddElement)
+
 //************************************
 //            функции               //
 //************************************
@@ -80,26 +90,8 @@ function handleElementClick(name, link) {
   openModalWindow(modalElementImage)
 }
 
-
 // возвращает Node картинки по шаблону из переданного объекта
 function createElement(item) {
-/*  const element = elementTemplate.cloneNode(true)
-  const [deleteButton,elementImage,elementTitle,heartButton] = element.querySelectorAll('.element__delete,.element__image,.element__title,.element__heart')
-
-  elementTitle.textContent = item.name
-  elementImage.src = item.link
-  elementImage.alt = item.name
-
-  deleteButton.addEventListener('click', evt => evt.target.closest('.element').remove())
-  heartButton.addEventListener('click', evt => evt.target.closest('.element__heart').classList.toggle('element__heart-active'))
-  elementImage.addEventListener('click', () => {
-    popupOpenPhoto.src = item.link
-    popupOpenPhoto.alt = item.name
-    popupOpenSubtitle.textContent = item.name
-    openModalWindow(modalElementImage)
-  })
-
-  return element*/
   return new Card(item, elementTemplate, handleElementClick).getElement()
 }
 
@@ -134,14 +126,14 @@ btnCancelProfileEdit.addEventListener("click", () => closeModalWindow(modalProfi
 // открытие формы добавления элемента
 btnOpenAddElement.addEventListener('click', () => {
   resetFormCondition(modalAddElement)
-  disableSubmitButton(modalAddElement)
+  validationAddElement.disableSubmitButton()
   openModalWindow(modalAddElement)
 });
 
 // закрытие без сохранения формы добавления элемента
 btnCancelAddElement.addEventListener('click', () => closeModalWindow(modalAddElement))
 
-// добавленние элемента из данных, введенных в форму; закрытие формы
+// добавление элемента из данных, введенных в форму; закрытие формы
 formAddElement.addEventListener('submit', (evt) => {
   elementsList.prepend(createElement({name: inputElementName.value, link: inputElementLink.value}))
   closeModalWindow(modalAddElement)
@@ -157,6 +149,10 @@ document.addEventListener('mousedown', evt => {
 //************************************
 //      отрисовка страницы          //
 //************************************
+
+//включение валидации форм
+validationProfileEdit.enableValidation()
+validationAddElement.enableValidation()
 
 // отрисовка картинок
 elementsList.append(...initialElements.map(createElement))
