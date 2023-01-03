@@ -37,8 +37,8 @@ class FormValidator {
 
  // изменение доступности кнопки в зависимости от результата проверки полей ввода
  _toggleButtonState = () => {
-    this._inputList.some(inputElement => inputElement.validity.valid ?
-      this._buttonSubmit.classList.add(this._settings.inactiveButtonClass) :
+    this._inputList.some(inputElement => !inputElement.validity.valid ?
+      this._buttonSubmit.classList.remove(this._settings.inactiveButtonClass) :
       this._buttonSubmit.classList.remove(this._settings.inactiveButtonClass)
     )
  }
