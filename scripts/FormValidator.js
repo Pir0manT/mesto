@@ -35,7 +35,7 @@ class FormValidator {
       this._hideInputError(inputElement)
  }
 
- // изменение доступности кнопки в зависимости от результата проверки
+ // изменение доступности кнопки в зависимости от результата проверки полей ввода
  _toggleButtonState = () => {
     this._inputList.some(inputElement => inputElement.validity.valid ?
       this._buttonSubmit.classList.add(this._settings.inactiveButtonClass) :
