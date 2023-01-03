@@ -6,6 +6,10 @@ import {
   initialElements
 } from './constants.js'
 
+import {
+  Card
+} from './Card.js'
+
 //************************************
 //           переменные             //
 //************************************
@@ -68,9 +72,18 @@ function closeModalWindow(modalWindow) {
   document.removeEventListener('keydown', closePopupByEsc)
 }
 
+// открывает popup с картинкой элемента
+function handleElementClick(name, link) {
+  popupOpenPhoto.src = link
+  popupOpenPhoto.alt = name
+  popupOpenSubtitle.textContent = name
+  openModalWindow(modalElementImage)
+}
+
+
 // возвращает Node картинки по шаблону из переданного объекта
 function createElement(item) {
-  const element = elementTemplate.cloneNode(true)
+/*  const element = elementTemplate.cloneNode(true)
   const [deleteButton,elementImage,elementTitle,heartButton] = element.querySelectorAll('.element__delete,.element__image,.element__title,.element__heart')
 
   elementTitle.textContent = item.name
@@ -86,7 +99,8 @@ function createElement(item) {
     openModalWindow(modalElementImage)
   })
 
-  return element
+  return element*/
+  return new Card(item, elementTemplate, handleElementClick).getElement()
 }
 
 //************************************

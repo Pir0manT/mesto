@@ -6,15 +6,15 @@
 class Card {
   constructor(data, template, handleClick) {
     this._data        = data
-    this._template    = document.querySelector(template).content
+    this._template    = template
     this._handleClick = handleClick
   }
 
   // заполнение полей карточки
   _fill = () => {
     this._elementImage.src         = this._data.link
-    this._elementImage.alt         = this._data.title
-    this._elementTitle.textContent = this._data.title
+    this._elementImage.alt         = this._data.name
+    this._elementTitle.textContent = this._data.name
   }
 
   // подписка на события
