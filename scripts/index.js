@@ -2,25 +2,18 @@
 //             Импорт               //
 //************************************
 
-import {
-  initialElements,
-  validationConfig
-} from './constants.js'
-
-import {
-  Card
-} from './Card.js'
-
-import {
-  FormValidator
-} from './FormValidator.js'
+import { initialElements, validationConfig } from './constants.js'
+import { Card } from './Card.js'
+import { FormValidator } from './FormValidator.js'
+import { Section} from './Section.js'
+import { UserInfo } from './UserInfo.js'
 
 //************************************
 //           переменные             //
 //************************************
 
 // Добавление картинок
-const elementsList = document.querySelector(".elements__grid")
+//const elementsList = document.querySelector(".elements__grid")
 // const elementTemplate = document.querySelector(".element-template")
 
 // попапы
@@ -39,8 +32,8 @@ const btnOpenAddElement = document.querySelector(".profile__add-button")
 const buttonCloseList = document.querySelectorAll('.popup__close');
 
 // профиль
-const profileName = document.querySelector(".profile__title")
-const profileJob = document.querySelector(".profile__subtitle")
+//const profileName = document.querySelector(".profile__title")
+//const profileJob = document.querySelector(".profile__subtitle")
 
 // поля ввода
 const inputProfileName = modalProfileEdit.querySelector(".popup__input_type_name")
@@ -55,6 +48,20 @@ const formAddElement = modalAddElement.querySelector('.popup__form')
 //валидаторы форм
 const validationProfileEdit = new FormValidator(validationConfig, formProfileEdit)
 const validationAddElement  = new FormValidator(validationConfig, formAddElement)
+
+const section = new Section(
+  {
+    data: initialElements,
+    renderer: (items, container) =>
+      container.append(...items.map(createElement)),
+  },
+  '.elements__grid'
+)
+
+const userInfo = new UserInfo({
+  nameSelector: '.profile__title',
+  jobSelector: '.profile__subtitle',
+})
 
 //************************************
 //            функции               //
@@ -87,7 +94,7 @@ function handleElementClick(name, link) {
   openModalWindow(modalElementImage)
 }
 
-// возвращает Node картинки по шаблону из переданного объекта
+// возвращает DOM-элемент карточки по шаблону из переданного объекта
 function createElement(item) {
   return new Card(item, '.element-template', handleElementClick).getElement()
 }
@@ -108,18 +115,22 @@ buttonCloseList.forEach(btn => {
 })
 
 // открытие формы редактирования профиля
-btnOpenProfileEdit.addEventListener("click", () => {
+btnOpenProfileEdit.addEventListener('click', () => {
   // resetFormCondition(modalProfileEdit)
-  inputProfileName.value = profileName.textContent
-  inputProfileJob.value = profileJob.textContent
+  const { name, job } = userInfo.getUserInfo()
+  // inputProfileName.value = profileName.textContent
+  // inputProfileJob.value = profileJob.textContent
+  inputProfileName.value = name
+  inputProfileJob.value = job
   validationProfileEdit.resetValidation(false)
   openModalWindow(modalProfileEdit)
-});
+})
 
 //сохранение данных из формы редактирования профиля
 formProfileEdit.addEventListener('submit', () => {
-  profileName.textContent = inputProfileName.value
-  profileJob.textContent = inputProfileJob.value
+  userInfo.setUserInfo(inputProfileName.value, inputProfileJob.value)
+  // profileName.textContent = inputProfileName.value
+  // profileJob.textContent = inputProfileJob.value
   closeModalWindow(modalProfileEdit)
 });
 
@@ -133,7 +144,13 @@ btnOpenAddElement.addEventListener('click', () => {
 
 // добавление элемента из данных, введенных в форму; закрытие формы
 formAddElement.addEventListener('submit', () => {
-  elementsList.prepend(createElement({name: inputElementName.value, link: inputElementLink.value}))
+  section.addItem(
+    createElement({
+      name: inputElementName.value,
+      link: inputElementLink.value,
+    })
+  )
+  //elementsList.prepend(createElement({name: inputElementName.value, link: inputElementLink.value}))
   closeModalWindow(modalAddElement)
 })
 
@@ -146,4 +163,5 @@ validationProfileEdit.enableValidation()
 validationAddElement.enableValidation()
 
 // отрисовка картинок
-elementsList.append(...initialElements.map(createElement))
+//elementsList.append(...initialElements.map(createElement))
+section.renderItems()

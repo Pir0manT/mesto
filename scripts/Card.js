@@ -1,9 +1,9 @@
 //************************************
-//      Модуль описания класса      //
-//  карточки с картинкой и текстом  //
+//      Модуль класса  карточки     //
+//       с картинкой и текстом      //
 //************************************
 
-class Card {
+export class Card {
   constructor(data, template, handleClick) {
     this._data        = data
     this._template    = document.querySelector(template).content
@@ -42,12 +42,3 @@ class Card {
     return this._element;
   }
 }
-
-//************************************
-//             Экспорт              //
-//************************************
-
-export {
-  Card
-}
-
