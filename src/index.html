@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <link href="./pages/index.css" rel="stylesheet">
-  <link href="./images/favicon.png" rel="icon" type="image/x-icon">
-  <meta content="проектная работа номер 7 Андрей Сергеев на Яндекс Практикуме" name="description">
+<!--  <link href='pages/index.css' rel="stylesheet">-->
+  <link href='images/favicon.png' rel="icon" type="image/x-icon">
+  <meta content="проектная работа номер 8 Андрей Сергеев на Яндекс Практикуме" name="description">
   <meta content="Андрей Сергеев" name="author">
   <title>Место: интерактивный сайт для фотографий</title>
 </head>
 
 <body class="page">
   <header class="header">
-    <a href=#><img alt="логотип Место" class="header__logo link-opacity" src="./images/logo.svg"></a>
+    <a href=#><img alt="логотип Место" class="header__logo link-opacity" src="<%=require('./images/logo.svg')%>"></a>
   </header>
   <main>
     <section class="profile" aria-label="Профиль пользователя">
-      <img src="./images/avatar.jpg" alt="фотография профиля" class="profile__avatar">
+      <img src="<%=require('./images/avatar.jpg')%>" alt="фотография профиля" class="profile__avatar">
       <div class="profile__info">
         <div class="profile__container">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -87,7 +87,7 @@
     </li>
   </template>
 
-  <script type="module" src="./scripts/index.js"></script>
+<!--  <script type="module" src='pages/index.js'></script>-->
 </body>
 </html>
 
