@@ -10,13 +10,13 @@ export class UserInfo {
   }
   getUserInfo = () => {
     return {
-      name: this._nameTitle.textContent,
+      username: this._nameTitle.textContent,
       job: this._jobTitle.textContent,
     }
   }
 
-  setUserInfo = (name, job) => {
-    this._nameTitle.textContent = name
+  setUserInfo = ({username, job}) => {
+    this._nameTitle.textContent = username
     this._jobTitle.textContent = job
   }
 }

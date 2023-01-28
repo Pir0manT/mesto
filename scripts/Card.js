@@ -23,7 +23,6 @@ export class Card {
 
   _delete = () => {
     this._buttonDelete.closest('.element').remove()
-    this._element.remove()
     this._element = null
   }
   // подписка на события

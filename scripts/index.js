@@ -7,6 +7,7 @@ import { Card } from './Card.js'
 import { FormValidator } from './FormValidator.js'
 import { Section} from './Section.js'
 import { UserInfo } from './UserInfo.js'
+import {PopupWithForm} from './PopupWithForm.js'
 
 //************************************
 //           переменные             //
@@ -63,16 +64,33 @@ const userInfo = new UserInfo({
   jobSelector: '.profile__subtitle',
 })
 
+const editProfilePopup = new PopupWithForm(
+  '.popup_type_edit-profile',
+  (values) => {
+    userInfo.setUserInfo(values)
+    editProfilePopup.close()
+  }
+)
+
+const addElementPopup = new PopupWithForm(
+  '.popup_type_add-element',
+  (values) => {
+    section.addItem(createElement(values))
+    addElementPopup.close()
+  }
+)
+
+
 //************************************
 //            функции               //
 //************************************
 
 // закрытие popup по клавише Esc
-function closePopupByEsc(evt) {
-  if (evt.key === 'Escape') {
-    closeModalWindow(document.querySelector(".popup_opened"))
-  }
-}
+// function closePopupByEsc(evt) {
+//   if (evt.key === 'Escape') {
+//     closeModalWindow(document.querySelector(".popup_opened"))
+//   }
+// }
 
 // открывает popup
 function openModalWindow(modalWindow) {
@@ -81,10 +99,10 @@ function openModalWindow(modalWindow) {
 }
 
 // закрывает popup
-function closeModalWindow(modalWindow) {
-  modalWindow.classList.remove('popup_opened')
-  document.removeEventListener('keydown', closePopupByEsc)
-}
+// function closeModalWindow(modalWindow) {
+//   modalWindow.classList.remove('popup_opened')
+//   document.removeEventListener('keydown', closePopupByEsc)
+// }
 
 // открывает popup с картинкой элемента
 function handleElementClick(name, link) {
@@ -104,55 +122,52 @@ function createElement(item) {
 //************************************
 
 // закрытие любого из имеющихся popup
-buttonCloseList.forEach(btn => {
-  const popup = btn.closest('.popup');
-  popup.addEventListener('mousedown', (evt) => {
-    if (evt.target.classList.contains("popup")){
-    closeModalWindow(popup)
-  }
-});
-  btn.addEventListener('click', () => closeModalWindow(popup));
-})
+// buttonCloseList.forEach(btn => {
+//   const popup = btn.closest('.popup');
+//   popup.addEventListener('mousedown', (evt) => {
+//     if (evt.target.classList.contains("popup")){
+//     closeModalWindow(popup)
+//   }
+// });
+//   btn.addEventListener('click', () => closeModalWindow(popup));
+// })
 
 // открытие формы редактирования профиля
 btnOpenProfileEdit.addEventListener('click', () => {
-  // resetFormCondition(modalProfileEdit)
-  const { name, job } = userInfo.getUserInfo()
-  // inputProfileName.value = profileName.textContent
-  // inputProfileJob.value = profileJob.textContent
-  inputProfileName.value = name
-  inputProfileJob.value = job
+  editProfilePopup.setInputValues(userInfo.getUserInfo())
   validationProfileEdit.resetValidation(false)
-  openModalWindow(modalProfileEdit)
+  editProfilePopup.open()
+
 })
 
 //сохранение данных из формы редактирования профиля
-formProfileEdit.addEventListener('submit', () => {
-  userInfo.setUserInfo(inputProfileName.value, inputProfileJob.value)
-  // profileName.textContent = inputProfileName.value
-  // profileJob.textContent = inputProfileJob.value
-  closeModalWindow(modalProfileEdit)
-});
-
+// formProfileEdit.addEventListener('submit', () => {
+//   userInfo.setUserInfo(inputProfileName.value, inputProfileJob.value)
+//   // profileName.textContent = inputProfileName.value
+//   // profileJob.textContent = inputProfileJob.value
+//   closeModalWindow(modalProfileEdit)
+// });
+//
 
 // открытие формы добавления элемента
 btnOpenAddElement.addEventListener('click', () => {
   validationAddElement.resetValidation()
-  openModalWindow(modalAddElement)
+  addElementPopup.open()
+  //openModalWindow(modalAddElement)
 });
 
 
 // добавление элемента из данных, введенных в форму; закрытие формы
-formAddElement.addEventListener('submit', () => {
-  section.addItem(
-    createElement({
-      name: inputElementName.value,
-      link: inputElementLink.value,
-    })
-  )
-  //elementsList.prepend(createElement({name: inputElementName.value, link: inputElementLink.value}))
-  closeModalWindow(modalAddElement)
-})
+// formAddElement.addEventListener('submit', () => {
+//   section.addItem(
+//     createElement({
+//       name: inputElementName.value,
+//       link: inputElementLink.value,
+//     })
+//   )
+//   //elementsList.prepend(createElement({name: inputElementName.value, link: inputElementLink.value}))
+//   closeModalWindow(modalAddElement)
+// })
 
 //************************************
 //      отрисовка страницы          //
@@ -164,4 +179,6 @@ validationAddElement.enableValidation()
 
 // отрисовка картинок
 //elementsList.append(...initialElements.map(createElement))
+editProfilePopup.setEventListeners()
+addElementPopup.setEventListeners()
 section.renderItems()

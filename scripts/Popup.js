@@ -1,6 +1,6 @@
 //************************************
-//     Модуль класса всплывающего   //
-//              окна                //
+//     Модуль класса абстрактного    //
+//          всплывающего окна        //
 //************************************
 
 export class Popup {
@@ -9,12 +9,12 @@ export class Popup {
   }
 
   open = () => {
-    this._popup.classList.add('.popup__opened')
+    this._popup.classList.add('popup_opened')
     document.addEventListener('keydown', this._handleEscClose)
   }
 
-  close = () => {
-    this._popup.classList.remove('.popup__opened')
+  close() {
+    this._popup.classList.remove('popup_opened')
     document.removeEventListener('keydown', this._handleEscClose)
   }
 
@@ -22,10 +22,10 @@ export class Popup {
     evt.key === 'Escape' && this.close()
   }
 
-  setEventListeners = () => {
+  setEventListeners() {
     this._popup.addEventListener('mousedown', (evt) => {
-      evt.classList.contains('popup') && this.close()
-      evt.classList.contains('popup__close') && this.close()
+      evt.target.classList.contains('popup') && this.close()
+      evt.target.classList.contains('popup__close') && this.close()
     })
   }
 }
