@@ -33,11 +33,21 @@ export class FormValidator {
       : this._hideInputError(inputElement)
   }
 
+  _disableButton = () => {
+    this._buttonSubmit.classList.add(this._settings.inactiveButtonClass)
+    this._buttonSubmit.disabled = true
+  }
+
+  _enableButton = () => {
+    this._buttonSubmit.classList.remove(this._settings.inactiveButtonClass)
+    this._buttonSubmit.disabled = false
+  }
+
   // изменение доступности кнопки в зависимости от результата проверки полей ввода
   _toggleButtonState = () => {
     this._inputList.some((inputElement) => !inputElement.validity.valid)
-      ? this._buttonSubmit.classList.add(this._settings.inactiveButtonClass)
-      : this._buttonSubmit.classList.remove(this._settings.inactiveButtonClass)
+      ? this._disableButton()
+      : this._enableButton()
   }
 
   // скрыть ошибки валидации, очистить содержимое инпутов
@@ -50,7 +60,6 @@ export class FormValidator {
 
   // включение валидации
   enableValidation = () => {
-    this._form.addEventListener('submit', (evt) => evt.preventDefault())
     this._inputList.forEach((inputElement) =>
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(inputElement)
