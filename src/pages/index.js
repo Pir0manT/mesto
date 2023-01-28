@@ -34,9 +34,8 @@ const validationAddElement  = new FormValidator(validationConfig, formAddElement
 // секции и попапы
 const section = new Section(
   {
-    data: initialElements,
-    renderer: (items, container) =>
-      container.append(...items.map(createElement)),
+    renderer: (item) =>
+      section.addItem(createElement(item))
   },
   '.elements__grid'
 )
@@ -107,4 +106,4 @@ validationAddElement.enableValidation()
 //************************************
 
 // отрисовка картинок
-section.renderItems()
+section.renderItems(initialElements.reverse())

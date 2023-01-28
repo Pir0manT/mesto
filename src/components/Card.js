@@ -22,7 +22,7 @@ export class Card {
 }
 
   _delete = () => {
-    this._buttonDelete.closest('.element').remove()
+    this._element.remove()
     this._element = null
   }
   // подписка на события
@@ -33,8 +33,11 @@ export class Card {
   }
 
   getElement = () => {
-    this._element = this._template.cloneNode(true);
-    [this._buttonDelete,this._elementImage,this._elementTitle,this._buttonLike] = this._element.querySelectorAll('.element__delete,.element__image,.element__title,.element__heart')
+    this._element = this._template.querySelector('.element').cloneNode(true);
+    this._buttonDelete = this._element.querySelector('.element__delete')
+    this._elementImage = this._element.querySelector('.element__image')
+    this._elementTitle = this._element.querySelector('.element__title')
+    this._buttonLike = this._element.querySelector('.element__heart')
     this._fill();
     this._setEventListeners();
 
