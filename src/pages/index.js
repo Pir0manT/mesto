@@ -19,17 +19,9 @@ import {PopupWithImage} from '../components/PopupWithImage.js'
 const btnOpenProfileEdit = document.querySelector(".profile__edit-button")
 const btnOpenAddElement = document.querySelector(".profile__add-button")
 
-//формы
-const formProfileEdit = document
-  .querySelector('.popup_type_edit-profile')
-  .querySelector('.popup__form')
-const formAddElement = document
-  .querySelector('.popup_type_add-element')
-  .querySelector('.popup__form')
-
 //валидаторы форм
-const validationProfileEdit = new FormValidator(validationConfig, formProfileEdit)
-const validationAddElement  = new FormValidator(validationConfig, formAddElement)
+const validationProfileEdit = new FormValidator(validationConfig, document.forms.edit)
+const validationAddElement  = new FormValidator(validationConfig, document.forms.addcard)
 
 // секции и попапы
 const section = new Section(
@@ -45,19 +37,19 @@ const userInfo = new UserInfo({
   jobSelector: '.profile__subtitle',
 })
 
-const editProfilePopup = new PopupWithForm(
+const profileEditPopup = new PopupWithForm(
   '.popup_type_edit-profile',
   (values) => {
     userInfo.setUserInfo(values)
-    editProfilePopup.close()
+    profileEditPopup.close()
   }
 )
 
-const addElementPopup = new PopupWithForm(
+const elementAddPopup = new PopupWithForm(
   '.popup_type_add-element',
   (values) => {
     section.addItem(createElement(values))
-    addElementPopup.close()
+    elementAddPopup.close()
   }
 )
 
@@ -69,7 +61,7 @@ const openImagePopup = new PopupWithImage('.popup_type_open-image')
 
 // возвращает DOM-элемент карточки по шаблону из переданного объекта
 function createElement(item) {
-  return new Card(item, '.element-template', openImagePopup.open).getElement()
+  return new Card(item, '.element-template', () => openImagePopup.open(item)).getElement()
 }
 
 //************************************
@@ -78,19 +70,19 @@ function createElement(item) {
 
 // открытие формы редактирования профиля
 btnOpenProfileEdit.addEventListener('click', () => {
-  editProfilePopup.setInputValues(userInfo.getUserInfo())
+  profileEditPopup.setInputValues(userInfo.getUserInfo())
   validationProfileEdit.resetValidation()
-  editProfilePopup.open()
+  profileEditPopup.open()
 })
 
 // открытие формы добавления элемента
 btnOpenAddElement.addEventListener('click', () => {
   validationAddElement.resetValidation()
-  addElementPopup.open()
+  elementAddPopup.open()
 });
 
-editProfilePopup.setEventListeners()
-addElementPopup.setEventListeners()
+profileEditPopup.setEventListeners()
+elementAddPopup.setEventListeners()
 openImagePopup.setEventListeners()
 
 //************************************

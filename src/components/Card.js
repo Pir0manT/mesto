@@ -29,7 +29,7 @@ export class Card {
   _setEventListeners = () => {
     this._buttonDelete.addEventListener('click', () => this._delete())
     this._buttonLike.addEventListener('click', () => this._toggleLike() )
-    this._elementImage.addEventListener('click', () => this._handleClick(this._data.name, this._data.link))
+    this._elementImage.addEventListener('click', () => this._handleClick())
   }
 
   getElement = () => {

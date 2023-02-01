@@ -45,9 +45,12 @@ export class FormValidator {
 
   // изменение доступности кнопки в зависимости от результата проверки полей ввода
   _toggleButtonState = () => {
-    this._inputList.some((inputElement) => !inputElement.validity.valid)
-      ? this._disableButton()
-      : this._enableButton()
+    // this._inputList.some((inputElement) => !inputElement.validity.valid)
+    //   ? this._disableButton()
+    //   : this._enableButton()
+    this._form.checkValidity()
+      ? this._enableButton()
+      : this._disableButton()
   }
 
   // скрыть ошибки валидации, очистить содержимое инпутов
