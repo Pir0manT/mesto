@@ -13,9 +13,10 @@ export class PopupWithForm extends Popup {
   }
 
   _getInputValues = () => {
-    return this._inputs.reduce((acc, input) => {
-      return { ...acc, [input.name]: input.value }
-    }, {})
+    return Object.fromEntries(new FormData(this._form).entries())
+    // return this._inputs.reduce((acc, input) => {
+    //   return { ...acc, [input.name]: input.value }
+    // }, {})
   }
 
   setInputValues = (values) => {
