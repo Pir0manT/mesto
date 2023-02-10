@@ -1,8 +1,0 @@
-.element__description {
-  display: flex;
-  min-height: 79px;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  padding: 0 20px 0 22px;
-}
