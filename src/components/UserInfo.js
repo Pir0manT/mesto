@@ -16,7 +16,7 @@ export class UserInfo {
       name: this._nameTitle.textContent,
       about: this._jobTitle.textContent,
       avatar: this._avatarImage.src,
-      id: this._id
+      _id: this._id
     }
   }
 

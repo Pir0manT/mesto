@@ -11,6 +11,7 @@ export class PopupWithForm extends Popup {
     super(popupSelector)
     this._form = this._popup.querySelector('.popup__form')
     this._inputs = Array.from(this._form.querySelectorAll('.popup__input'))
+    this._saveBtn = this._form.querySelector('.popup__save')
     this._handleSubmit = handleSubmit
   }
 
@@ -33,6 +34,10 @@ export class PopupWithForm extends Popup {
       evt.preventDefault()
       this._handleSubmit(this._getInputValues())
     })
+  }
+
+  renderSaving(isSaving = false)  {
+    this._saveBtn.textContent = isSaving ? 'Сохранение...' : 'Сохранить'
   }
 
   close = () => {

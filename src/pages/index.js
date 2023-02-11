@@ -4,7 +4,7 @@
 //************************************
 
 import '../pages/index.css';
-import { initialElements, validationConfig } from '../scripts/constants.js'
+import { validationConfig } from '../scripts/constants.js'
 import { Card } from '../components/Card.js'
 import { FormValidator } from '../components/FormValidator.js'
 import { Section} from '../components/Section.js'
@@ -20,10 +20,12 @@ import {api} from '../components/Api'
 //кнопки
 const btnOpenProfileEdit = document.querySelector(".profile__edit-button")
 const btnOpenAddElement = document.querySelector(".profile__add-button")
+const btnChangeAvatar = document.querySelector('.profile__edit')
 
 //валидаторы форм
 const validationProfileEdit = new FormValidator(validationConfig, document.forms.edit)
 const validationAddElement  = new FormValidator(validationConfig, document.forms.addcard)
+const validationChangeAvatar = new FormValidator(validationConfig, document.forms.editAvatar)
 
 // секции и попапы
 const section = new Section(
@@ -43,10 +45,31 @@ const userInfo = new UserInfo({
 const profileEditPopup = new PopupWithForm(
   '.popup_type_edit-profile',
   (values) => {
-    userInfo.setUserInfo({...userInfo.getUserInfo(), ...values})
-    profileEditPopup.close()
+    profileEditPopup.renderSaving(true)
+    api
+      .setProfile(values)
+      .then((savedProfile) => {
+        userInfo.setUserInfo(savedProfile)
+        profileEditPopup.close()
+      })
+      .catch((err) => console.log(err))
+      .finally(() => profileEditPopup.renderSaving())
   }
 )
+
+const avatarEditPopup = new PopupWithForm(
+  '.popup_type_avatar',
+  (values) => {
+  avatarEditPopup.renderSaving(true)
+  api
+    .setAvatar(values)
+    .then((newAvatar) => {
+      userInfo.setUserInfo({ ...userInfo.getUserInfo(), ...newAvatar })
+      avatarEditPopup.close()
+    })
+    .catch((err) => console.log(err))
+    .finally(() => avatarEditPopup.renderSaving())
+})
 
 const elementAddPopup = new PopupWithForm(
   '.popup_type_add-element',
@@ -84,9 +107,17 @@ btnOpenAddElement.addEventListener('click', () => {
   elementAddPopup.open()
 });
 
+// открытие формы редактирования аватара
+btnChangeAvatar.addEventListener('click', () => {
+  avatarEditPopup.setInputValues(userInfo.getUserInfo())
+  validationChangeAvatar.resetValidation()
+  avatarEditPopup.open()
+})
+
 profileEditPopup.setEventListeners()
 elementAddPopup.setEventListeners()
 openImagePopup.setEventListeners()
+avatarEditPopup.setEventListeners()
 
 //************************************
 //      валидаторы ввода            //
@@ -95,15 +126,16 @@ openImagePopup.setEventListeners()
 //включение валидации форм
 validationProfileEdit.enableValidation()
 validationAddElement.enableValidation()
+validationChangeAvatar.enableValidation()
 
 //************************************
 //      отрисовка страницы          //
 //************************************
 
 Promise.all([api.getInitialCards(), api.getProfile()])
-  .then(([cards, userData]) => {
+  .then(([cards, userProfile]) => {
     // установка данных профиля пользователя
-    userInfo.setUserInfo(userData)
+    userInfo.setUserInfo(userProfile)
     // отрисовка картинок
     section.renderItems(cards.reverse())
   })

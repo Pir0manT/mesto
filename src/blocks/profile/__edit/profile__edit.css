@@ -1,0 +1,24 @@
+.profile__edit {
+  background: rgba(0, 0, 0, 0.8) url(../../../images/profileEdit.svg) no-repeat center;
+  width: 120px;
+  height: 120px;
+  margin: 0 30px 0 0;
+  position: absolute;
+  opacity: 0;
+  border-radius: 50%;
+  border-style: none;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+}
+
+.profile__edit:hover {
+  cursor: pointer;
+  transition: .5s;
+  opacity: 1;
+}
+
+@media screen and (max-width: 767px) {
+  .profile__edit {
+    margin: 0 0 26px;
+  }
+}

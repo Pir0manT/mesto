@@ -17,6 +17,7 @@
   <main>
     <section class="profile" aria-label="Профиль пользователя">
       <img src="<%=require('./images/avatar.jpg')%>" alt="фотография профиля" class="profile__avatar">
+      <button type="button" class="profile__edit"></button>
       <div class="profile__info">
         <div class="profile__container">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -35,6 +36,8 @@
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
 
+<!--  Popup редактирование профиля-->
+
   <div class="popup  popup_type_edit-profile">
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
@@ -47,9 +50,29 @@
         <span class="popup__error description-input-error"></span>
         <button class="popup__save" type="submit">Сохранить</button>
       </form>
-      <button class="popup__close link-opacity" aria-label="закрыть" type="button"></button>
+      <button class="popup__close link-opacity" aria-label="закрыть" type="button" name='save'></button>
     </div>
   </div>
+
+  <!-- Popup изменить аватар -->
+
+  <article class="popup popup_type_avatar">
+    <div class="popup__container">
+      <h2 class="popup__title">
+        Обновить аватар
+      </h2>
+      <form class="popup__form" name="editAvatar" novalidate>
+        <input class="popup__input popup__input_avatar" type="url" placeholder="Ссылка на аватар"
+               id="avatar-link" name="avatar" required>
+        <span class="popup__error avatar-link-error"></span>
+        <button class="popup__save" type="submit">Сохранить</button>
+      </form>
+      <button class="popup__close link-opacity" aria-label="закрыть" type="button"></button>
+    </div>
+  </article>
+
+
+<!--  Popup открытия картинки из карточки-->
 
   <div class="popup popup_type_open-image">
     <div class="popup__container-open">
@@ -58,6 +81,8 @@
       <p class="popup__open-photo-subtitle"></p>
     </div>
   </div>
+
+<!--  Popup добавления карточки-->
 
   <div class="popup popup_type_add-element">
     <div class="popup__container">
@@ -75,6 +100,7 @@
     </div>
   </div>
 
+<!--   Шаблон карточки-->
 
   <template class="element-template">
     <li class="element">
@@ -83,6 +109,7 @@
       <div class="element__description">
         <h2 class="element__title"></h2>
         <button class="element__heart" type="button" aria-label="нравится"></button>
+        <div class="card__like-count"></div>
       </div>
     </li>
   </template>
