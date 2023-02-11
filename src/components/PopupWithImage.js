@@ -13,10 +13,10 @@ export class PopupWithImage extends Popup {
     this._title = this._popup.querySelector('.popup__open-photo-subtitle')
   }
 
-  open = (item) => {
-    this._image.src = item.link
-    this._image.alt = item.name
-    this._title.textContent = item.name
+  open = ({name, link}) => {
+    this._image.src = link
+    this._image.alt = name
+    this._title.textContent = name
     super.open()
   }
 }

@@ -11,6 +11,7 @@ import { Section} from '../components/Section.js'
 import { UserInfo } from '../components/UserInfo.js'
 import {PopupWithForm} from '../components/PopupWithForm.js'
 import {PopupWithImage} from '../components/PopupWithImage.js'
+import {api} from '../components/Api'
 
 //************************************
 //           переменные             //
@@ -36,12 +37,13 @@ const section = new Section(
 const userInfo = new UserInfo({
   nameSelector: '.profile__title',
   jobSelector: '.profile__subtitle',
+  avatarSelector: '.profile__avatar'
 })
 
 const profileEditPopup = new PopupWithForm(
   '.popup_type_edit-profile',
   (values) => {
-    userInfo.setUserInfo(values)
+    userInfo.setUserInfo({...userInfo.getUserInfo(), ...values})
     profileEditPopup.close()
   }
 )
@@ -98,5 +100,16 @@ validationAddElement.enableValidation()
 //      отрисовка страницы          //
 //************************************
 
-// отрисовка картинок
-section.renderItems(initialElements.reverse())
+Promise.all([api.getInitialCards(), api.getProfile()])
+  .then(([cards, userData]) => {
+    // установка данных профиля пользователя
+    userInfo.setUserInfo(userData)
+    // отрисовка картинок
+    section.renderItems(cards.reverse())
+  })
+  .catch(err => console.log(err))
+
+// // отрисовка картинок
+// section.renderItems(initialElements.reverse())
+
+// api.getProfile().then(data => console.log(data)).catch(err => console.log(err))

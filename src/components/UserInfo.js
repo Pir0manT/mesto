@@ -5,19 +5,25 @@
 // TODO: Изменить стиль комментариев в формат JSDoc
 
 export class UserInfo {
-  constructor({nameSelector, jobSelector}) {
+  constructor({nameSelector, jobSelector, avatarSelector}) {
     this._nameTitle = document.querySelector(nameSelector)
     this._jobTitle = document.querySelector(jobSelector)
+    this._avatarImage = document.querySelector(avatarSelector)
+    this._id = ''
   }
   getUserInfo = () => {
     return {
-      username: this._nameTitle.textContent,
-      job: this._jobTitle.textContent,
+      name: this._nameTitle.textContent,
+      about: this._jobTitle.textContent,
+      avatar: this._avatarImage.src,
+      id: this._id
     }
   }
 
-  setUserInfo = ({username, job}) => {
-    this._nameTitle.textContent = username
-    this._jobTitle.textContent = job
+  setUserInfo = ({name, about, avatar, _id}) => {
+    this._nameTitle.textContent = name
+    this._jobTitle.textContent = about
+    this._avatarImage.src = avatar
+    this._id = _id
   }
 }
