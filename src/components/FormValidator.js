@@ -2,6 +2,7 @@
 //      Модуль класса валидатора     //
 //               форм                //
 //************************************
+// TODO: Изменить стиль комментариев в формат JSDoc
 
 export class FormValidator {
   constructor(settings, form) {

@@ -2,6 +2,8 @@
 //     Модуль класса всплывающего    //
 //           окна с формой           //
 //************************************
+// TODO: Изменить стиль комментариев в формат JSDoc
+
 import { Popup } from './Popup.js'
 
 export class PopupWithForm extends Popup {

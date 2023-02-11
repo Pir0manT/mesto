@@ -2,6 +2,7 @@
 //      Модуль класса информации     //
 //           о пользователе          //
 //************************************
+// TODO: Изменить стиль комментариев в формат JSDoc
 
 export class UserInfo {
   constructor({nameSelector, jobSelector}) {
