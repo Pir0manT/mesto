@@ -17,6 +17,8 @@ import {api} from '../components/Api'
 //           переменные             //
 //************************************
 
+let userId
+
 //кнопки
 const btnOpenProfileEdit = document.querySelector(".profile__edit-button")
 const btnOpenAddElement = document.querySelector(".profile__add-button")
@@ -87,7 +89,26 @@ const openImagePopup = new PopupWithImage('.popup_type_open-image')
 
 // возвращает DOM-элемент карточки по шаблону из переданного объекта
 function createElement(item) {
-  return new Card(item, '.element-template', () => openImagePopup.open(item)).getElement()
+  return new Card(item, '.element-template', userId,
+    () => openImagePopup.open(item),
+    deleteCard,
+    changeLike).getElement()
+
+}
+
+// выполняет удаление карточки с сервере
+function deleteCard(card)  {
+
+}
+
+// выполняет переключение лайка у карточки на сервере
+function changeLike(card)  {
+  api
+    .changeLike(card.getCardId(), card.isLiked())
+    .then(newCard => {
+      card.setLikes(newCard.likes)
+    })
+    .catch(err => console.log(err))
 }
 
 //************************************
@@ -136,6 +157,7 @@ Promise.all([api.getInitialCards(), api.getProfile()])
   .then(([cards, userProfile]) => {
     // установка данных профиля пользователя
     userInfo.setUserInfo(userProfile)
+    userId = userProfile._id
     // отрисовка картинок
     section.renderItems(cards.reverse())
   })

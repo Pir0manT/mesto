@@ -1,5 +1,6 @@
 .element__description {
   display: flex;
+  /*flex-direction: column;*/
   min-height: 79px;
   align-items: center;
   justify-content: space-between;

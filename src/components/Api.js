@@ -44,7 +44,7 @@ class Api {
 
   setProfile = ({ name, about }) => {
     return fetch(`${this._baseURL}/users/me`, {
-      method: 'PATCH',
+      method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({ name, about }),
     }).then(this._checkServerResponse)
@@ -52,7 +52,7 @@ class Api {
 
   setAvatar = ({ avatar }) => {
     return fetch(`${this._baseURL}/users/me/avatar`, {
-      method: 'PATCH',
+      method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({ avatar }),
     }).then(this._checkServerResponse)
@@ -60,22 +60,22 @@ class Api {
 
   addCard = (card) => {
     return fetch(`${this._baseURL}/cards`, {
-      method: 'POST',
+      method: "POST",
       headers: this._headers,
       body: JSON.stringify(card),
     }).then(this._checkServerResponse)
   }
 
-  delCard = (id) => {
-    return fetch(`${this._baseURL}/cards/${id}`, {
-      method: 'DELETE',
+  delCard = (cardId) => {
+    return fetch(`${this._baseURL}/cards/${cardId}`, {
+      method: "DELETE",
       headers: this._headers,
     }).then(this._checkServerResponse)
   }
 
-  changeLike = (cardId, isAdd = true) => {
+  changeLike = (cardId, isLiked) => {
     return fetch(`${this._baseURL}/cards/${cardId}/likes`, {
-      method: isAdd ? 'PUT' : 'DELETE',
+      method: isLiked ? "DELETE" : "PUT",
       headers: this._headers,
     }).then(this._checkServerResponse)
   }
@@ -93,5 +93,6 @@ export  const api = new Api({
   headers: {
     authorization: "a0b3e2e0-8bf7-47b3-9f51-e543921e1ae3",
     "Content-Type": "application/json",
-  },
-})
+  }
+}
+)
