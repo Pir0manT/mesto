@@ -1,19 +1,18 @@
-.popup__save {
+.popup__delete-submit {
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
   text-align: center;
   color: #fff;
   background-color: #000;
-  margin: 0;
+  margin: 13px auto 0;
   width: 100%;
   min-height: 50px;
   border: none;
-  border-radius: 2px;
 }
 
 @media screen  and (max-width: 767px) {
-  .popup__save {
+  .popup__delete-submit {
     font-size: 14px;
     line-height: 17px;
     margin: 10px auto 0;
@@ -21,7 +20,8 @@
   }
 }
 
-.popup__save:hover {
+.popup__delete-submit:hover {
   background-color: rgba(0, 0, 0, .8);
   cursor: pointer;
+  border-radius: 2px;
 }

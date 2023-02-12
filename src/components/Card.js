@@ -36,16 +36,16 @@ export class Card {
     return this._data.likes.some((like) => like._id === this._userId)
   }
 
-  getCardId = (card) => {
+  getCardId = () => {
     return this._data._id
   }
 
   setLikes = (newLikes) => {
     this._data.likes = newLikes
-    this.renderLikes()
+    this._renderLikes()
   }
 
-  renderLikes = () => {
+  _renderLikes = () => {
     this._element.querySelector('.element__heart-count').textContent =
       this._data.likes.length
     this.isLiked()
@@ -71,7 +71,7 @@ export class Card {
       this._buttonDelete.style.display = 'none'
     }
     this._fill()
-    this.renderLikes()
+    this._renderLikes()
     this._setEventListeners()
 
     return this._element

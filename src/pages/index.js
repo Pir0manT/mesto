@@ -12,12 +12,14 @@ import { UserInfo } from '../components/UserInfo.js'
 import {PopupWithForm} from '../components/PopupWithForm.js'
 import {PopupWithImage} from '../components/PopupWithImage.js'
 import {api} from '../components/Api'
+import {PopupWithConfirmation} from '../components/PopupWithConfirmation'
 
 //************************************
 //           переменные             //
 //************************************
 
-let userId
+// ID текущего пользователя
+let userId = ''
 
 //кнопки
 const btnOpenProfileEdit = document.querySelector(".profile__edit-button")
@@ -76,12 +78,20 @@ const avatarEditPopup = new PopupWithForm(
 const elementAddPopup = new PopupWithForm(
   '.popup_type_add-element',
   (values) => {
-    section.addItem(createElement(values))
-    elementAddPopup.close()
+    elementAddPopup.renderSaving(true)
+    api.addCard(values)
+      .then((newCard) => {
+      section.addItem(createElement(newCard))
+      elementAddPopup.close()
+    })
+      .catch(err => console.log(err))
+      .finally(()=> elementAddPopup.renderSaving())
   }
 )
 
 const openImagePopup = new PopupWithImage('.popup_type_open-image')
+
+const confirmationPopup = new PopupWithConfirmation('.popup_type_confirm')
 
 //************************************
 //            функции               //
@@ -96,9 +106,17 @@ function createElement(item) {
 
 }
 
-// выполняет удаление карточки с сервере
+// выполняет удаление карточки на сервере
 function deleteCard(card)  {
-
+ confirmationPopup.setFormSubmitHandler(() => {
+   api.delCard(card.getCardId())
+     .then(() => {
+       card.delete()
+       confirmationPopup.close()
+     })
+     .catch(err => console.log(err))
+ })
+ confirmationPopup.open()
 }
 
 // выполняет переключение лайка у карточки на сервере
@@ -139,6 +157,7 @@ profileEditPopup.setEventListeners()
 elementAddPopup.setEventListeners()
 openImagePopup.setEventListeners()
 avatarEditPopup.setEventListeners()
+confirmationPopup.setEventListeners()
 
 //************************************
 //      валидаторы ввода            //
@@ -162,8 +181,3 @@ Promise.all([api.getInitialCards(), api.getProfile()])
     section.renderItems(cards.reverse())
   })
   .catch(err => console.log(err))
-
-// // отрисовка картинок
-// section.renderItems(initialElements.reverse())
-
-// api.getProfile().then(data => console.log(data)).catch(err => console.log(err))

@@ -48,7 +48,7 @@
         <input class="popup__input popup__input_type_job" type="text" placeholder="Немного о себе" id="description-input"
                name="about" minlength="2" maxlength="200" required>
         <span class="popup__error description-input-error"></span>
-        <button class="popup__save" type="submit">Сохранить</button>
+        <button class='popup__save' type="submit">Сохранить</button>
       </form>
       <button class="popup__close link-opacity" aria-label="закрыть" type="button" name='save'></button>
     </div>
@@ -65,7 +65,7 @@
         <input class="popup__input popup__input_avatar" type="url" placeholder="Ссылка на аватар"
                id="avatar-link" name="avatar" required>
         <span class="popup__error avatar-link-error"></span>
-        <button class="popup__save" type="submit">Сохранить</button>
+        <button class='popup__save' type="submit">Сохранить</button>
       </form>
       <button class="popup__close link-opacity" aria-label="закрыть" type="button"></button>
     </div>
@@ -94,11 +94,22 @@
         <input class="popup__input popup__input_type_element-link"  type="url" placeholder="Ссылка на картинку"
                id="element-link" name="link" required>
         <span class="popup__error element-link-error"></span>
-        <button class="popup__save popup__create-element" type="submit">Сохранить</button>
+        <button class='popup__save popup__create-element' type="submit">Сохранить</button>
       </form>
       <button class="popup__close link-opacity" aria-label="закрыть" type="button"></button>
     </div>
   </div>
+
+  <!-- Popup подтверждение удаления карточки -->
+  <article class="popup popup_type_confirm">
+    <div class="popup__container-delete">
+      <h2 class="popup__title">Вы уверены?</h2>
+      <form class="popup__form popup__form_delete" name="delete" novalidate>
+        <button class='popup__save popup__delete-submit' type="submit">Да</button>
+      </form>
+      <button class="popup__close link-opacity" aria-label="закрыть" type="button"></button>
+    </div>
+  </article>
 
 <!--   Шаблон карточки-->
 

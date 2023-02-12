@@ -36,7 +36,7 @@ export class PopupWithForm extends Popup {
     })
   }
 
-  renderSaving(isSaving = false)  {
+  renderSaving = (isSaving = false)  => {
     this._saveBtn.textContent = isSaving ? 'Сохранение...' : 'Сохранить'
   }
 

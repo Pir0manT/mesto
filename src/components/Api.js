@@ -12,22 +12,22 @@ class Api {
   }
 
   _checkServerResponse = (res) => {
-    // return res.ok
-    //   ? res.json()
-    //   : Promise.reject(
-    //       `Ошибка: ${res.status} ${
-    //         !!res.statusText ? 'Описание: ' + res.statusText : ''
-    //       }`
-    //     )
-    if (res.ok) {
-      return res.json()
-    } else {
-      return Promise.reject(
-        `Ошибка: ${res.status} ${
-          !!res.statusText ? 'Описание: ' + res.statusText : ''
-        }`
-      )
-    }
+    return res.ok
+      ? res.json()
+      : Promise.reject(
+          `Ошибка: ${res.status} ${
+            !!res.statusText ? 'Описание: ' + res.statusText : ''
+          }`
+        )
+    // if (res.ok) {
+    //   return res.json()
+    // } else {
+    //   return Promise.reject(
+    //     `Ошибка: ${res.status} ${
+    //       !!res.statusText ? 'Описание: ' + res.statusText : ''
+    //     }`
+    //   )
+    // }
   }
 
   getInitialCards = () => {
