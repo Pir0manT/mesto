@@ -22,7 +22,7 @@ export class Card {
   }
 
   // заполнение полей карточки
-  _fill = () => {
+  _fillCardData = () => {
     this._elementImage.src = this._data.link
     this._elementImage.alt = this._data.name
     this._elementTitle.textContent = this._data.name
@@ -68,7 +68,7 @@ export class Card {
     if (this._data.owner._id !== this._userId) {
       this._buttonDelete.style.display = 'none'
     }
-    this._fill()
+    this._fillCardData()
     this._renderLikes()
     this._setEventListeners()
 

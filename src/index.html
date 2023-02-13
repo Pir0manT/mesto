@@ -41,7 +41,7 @@
   <div class="popup  popup_type_edit-profile">
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form class="popup__form" name="edit" novalidate>
+      <form class="popup__form" name="editProfile" novalidate>
         <input class="popup__input popup__input_type_name" type="text" placeholder="Ваше имя" id="name-input" name="name"
                minlength="2" maxlength="40" required>
         <span class="popup__error name-input-error"></span>
@@ -87,7 +87,7 @@
   <div class="popup popup_type_add-element">
     <div class="popup__container">
       <h2 class="popup__title">Новое место</h2>
-      <form class="popup__form" name="addcard" novalidate>
+      <form class="popup__form" name="addCard" novalidate>
         <input class="popup__input popup__input_type_element-name"  type="text" placeholder="Название"
                id="element-name" name="name" minlength="2" maxlength="30" required>
         <span class="popup__error element-name-error"></span>
@@ -104,7 +104,7 @@
   <article class="popup popup_type_confirm">
     <div class="popup__container-delete">
       <h2 class="popup__title">Вы уверены?</h2>
-      <form class="popup__form popup__form_delete" name="delete" novalidate>
+      <form class="popup__form popup__form_delete" name="deleteCard" novalidate>
         <button class='popup__save popup__delete-submit' type="submit">Да</button>
       </form>
       <button class="popup__close link-opacity" aria-label="закрыть" type="button"></button>
