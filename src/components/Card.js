@@ -54,9 +54,7 @@ export class Card {
   // подписка на события
   _setEventListeners = () => {
     this._buttonDelete.addEventListener('click', () => this._handleDelete(this))
-    this._buttonLike.addEventListener('click', () =>
-      this._handleChangeLike(this)
-    )
+    this._buttonLike.addEventListener('click', () => this._handleChangeLike(this))
     this._elementImage.addEventListener('click', () => this._handleClick())
   }
 
