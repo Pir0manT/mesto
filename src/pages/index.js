@@ -99,24 +99,28 @@ const confirmationPopup = new PopupWithConfirmation('.popup_type_confirm')
 
 // возвращает DOM-элемент карточки по шаблону из переданного объекта
 function createElement(item) {
-  return new Card(item, '.element-template', userId,
+  return new Card(
+    item,
+    '.element-template',
+    userId,
     () => openImagePopup.open(item),
     deleteCard,
-    changeLike).getElement()
-
+    changeLike
+  ).getElement()
 }
 
 // выполняет удаление карточки на сервере
-function deleteCard(card)  {
- confirmationPopup.setFormSubmitHandler(() => {
-   api.delCard(card.getCardId())
-     .then(() => {
-       card.delete()
-       confirmationPopup.close()
-     })
-     .catch(err => console.log(err))
- })
- confirmationPopup.open()
+function deleteCard(card) {
+  confirmationPopup.setFormSubmitHandler(() => {
+    api
+      .delCard(card.getCardId())
+      .then(() => {
+        card.delete()
+      })
+      .catch((err) => console.log(err))
+      .finally(() => confirmationPopup.close())
+  })
+  confirmationPopup.open()
 }
 
 // выполняет переключение лайка у карточки на сервере
