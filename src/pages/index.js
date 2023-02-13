@@ -26,10 +26,13 @@ const btnOpenProfileEdit = document.querySelector(".profile__edit-button")
 const btnOpenAddElement = document.querySelector(".profile__add-button")
 const btnChangeAvatar = document.querySelector('.profile__edit')
 
-//валидаторы форм
-const validationProfileEdit = new FormValidator(validationConfig, document.forms.edit)
-const validationAddElement  = new FormValidator(validationConfig, document.forms.addcard)
-const validationChangeAvatar = new FormValidator(validationConfig, document.forms.editAvatar)
+
+// const validationProfileEdit = new FormValidator(validationConfig, document.forms.edit)
+// const validationAddElement  = new FormValidator(validationConfig, document.forms.addcard)
+// const validationChangeAvatar = new FormValidator(validationConfig, document.forms.editAvatar)
+
+//здесь будут хранится валидаторы всех форм
+const formValidators = {}
 
 // секции и попапы
 const section = new Section(
@@ -67,8 +70,8 @@ const avatarEditPopup = new PopupWithForm(
   avatarEditPopup.renderSaving(true)
   api
     .setAvatar(values)
-    .then((newAvatar) => {
-      userInfo.setUserInfo({ ...userInfo.getUserInfo(), ...newAvatar })
+    .then((newUserInfo) => {
+      userInfo.setUserInfo(newUserInfo)
       avatarEditPopup.close()
     })
     .catch((err) => console.log(err))
@@ -116,9 +119,9 @@ function deleteCard(card) {
       .delCard(card.getCardId())
       .then(() => {
         card.delete()
+        confirmationPopup.close()
       })
       .catch((err) => console.log(err))
-      .finally(() => confirmationPopup.close())
   })
   confirmationPopup.open()
 }
@@ -133,6 +136,16 @@ function changeLike(card)  {
     .catch(err => console.log(err))
 }
 
+//создание и подключение валидаторов форм
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector))
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(formElement, config)
+    const formName = formElement.getAttribute('name')
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
 //************************************
 //      обработчики событий         //
 //************************************
@@ -140,20 +153,20 @@ function changeLike(card)  {
 // открытие формы редактирования профиля
 btnOpenProfileEdit.addEventListener('click', () => {
   profileEditPopup.setInputValues(userInfo.getUserInfo())
-  validationProfileEdit.resetValidation()
+  formValidators['editProfile'].resetValidation()
   profileEditPopup.open()
 })
 
 // открытие формы добавления элемента
 btnOpenAddElement.addEventListener('click', () => {
-  validationAddElement.resetValidation()
+  formValidators['addCard'].resetValidation()
   elementAddPopup.open()
 });
 
 // открытие формы редактирования аватара
 btnChangeAvatar.addEventListener('click', () => {
   avatarEditPopup.setInputValues(userInfo.getUserInfo())
-  validationChangeAvatar.resetValidation()
+  formValidators['editAvatar'].resetValidation()
   avatarEditPopup.open()
 })
 
@@ -168,10 +181,10 @@ confirmationPopup.setEventListeners()
 //************************************
 
 //включение валидации форм
-validationProfileEdit.enableValidation()
-validationAddElement.enableValidation()
-validationChangeAvatar.enableValidation()
-
+// validationProfileEdit.enableValidation()
+// validationAddElement.enableValidation()
+// validationChangeAvatar.enableValidation()
+enableValidation(validationConfig)
 //************************************
 //      отрисовка страницы          //
 //************************************

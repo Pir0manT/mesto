@@ -30,54 +30,58 @@ class Api {
     // }
   }
 
+  _request(url, options) {
+    return fetch(url, options).then(this._checkServerResponse)
+  }
+
   getInitialCards = () => {
-    return fetch(`${this._baseURL}/cards`, {
-      headers: this._headers,
-    }).then(this._checkServerResponse)
+    return this._request(`${this._baseURL}/cards`, {
+      headers: this._headers
+    })
   }
 
   getProfile = () => {
-    return fetch(`${this._baseURL}/users/me`, {
-      headers: this._headers,
-    }).then(this._checkServerResponse)
+    return this._request(`${this._baseURL}/users/me`, {
+      headers: this._headers
+    })
   }
 
   setProfile = ({ name, about }) => {
-    return fetch(`${this._baseURL}/users/me`, {
-      method: "PATCH",
+    return this._request(`${this._baseURL}/users/me`, {
+      method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({ name, about }),
-    }).then(this._checkServerResponse)
+    })
   }
 
   setAvatar = ({ avatar }) => {
-    return fetch(`${this._baseURL}/users/me/avatar`, {
-      method: "PATCH",
+    return this._request(`${this._baseURL}/users/me/avatar`, {
+      method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify({ avatar }),
-    }).then(this._checkServerResponse)
+      body: JSON.stringify({ avatar })
+    })
   }
 
   addCard = (card) => {
-    return fetch(`${this._baseURL}/cards`, {
-      method: "POST",
+    return this._request(`${this._baseURL}/cards`, {
+      method: 'POST',
       headers: this._headers,
-      body: JSON.stringify(card),
-    }).then(this._checkServerResponse)
+      body: JSON.stringify(card)
+    })
   }
 
   delCard = (cardId) => {
-    return fetch(`${this._baseURL}/cards/${cardId}`, {
-      method: "DELETE",
-      headers: this._headers,
-    }).then(this._checkServerResponse)
+    return this._request(`${this._baseURL}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: this._headers
+    })
   }
 
   changeLike = (cardId, isLiked) => {
-    return fetch(`${this._baseURL}/cards/${cardId}/likes`, {
-      method: isLiked ? "DELETE" : "PUT",
-      headers: this._headers,
-    }).then(this._checkServerResponse)
+    return this._request(`${this._baseURL}/cards/${cardId}/likes`, {
+      method: isLiked ? 'DELETE' : 'PUT',
+      headers: this._headers
+    })
   }
 }
 
