@@ -46,8 +46,7 @@ export class Card {
   }
 
   _renderLikes = () => {
-    this._element.querySelector('.element__heart-count').textContent =
-      this._data.likes.length
+    this._likeCounter.textContent = this._data.likes.length
     this.isLiked()
       ? this._buttonLike.classList.add('element__heart-active')
       : this._buttonLike.classList.remove('element__heart-active')
@@ -67,6 +66,7 @@ export class Card {
     this._elementImage = this._element.querySelector('.element__image')
     this._elementTitle = this._element.querySelector('.element__title')
     this._buttonLike = this._element.querySelector('.element__heart')
+    this._likeCounter = this._element.querySelector('.element__heart-count')
     if (this._data.owner._id !== this._userId) {
       this._buttonDelete.style.display = 'none'
     }
