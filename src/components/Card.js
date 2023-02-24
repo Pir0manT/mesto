@@ -47,9 +47,7 @@ export class Card {
 
   _renderLikes = () => {
     this._likeCounter.textContent = this._data.likes.length
-    this.isLiked()
-      ? this._buttonLike.classList.add('element__heart-active')
-      : this._buttonLike.classList.remove('element__heart-active')
+    this._buttonLike.classList.toggle('element__heart-active', this.isLiked())
   }
   // подписка на события
   _setEventListeners = () => {
