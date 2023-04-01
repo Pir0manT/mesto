@@ -36,7 +36,7 @@
 
 Клонировать репозиторий:
 
-    git clone https://github.com/ia-stepanov/mesto.git
+    git clone https://github.com/Pir0manT/mesto.git
 
 Установить зависимости:
 
