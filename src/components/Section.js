@@ -2,6 +2,8 @@
 //      Модуль класса отрисовки     //
 //               элементов          //
 //************************************
+// TODO: Изменить стиль комментариев в формат JSDoc
+
 export class Section {
   constructor({ renderer }, containerSelector) {
     //constructor({ items, renderer }, containerSelector) {

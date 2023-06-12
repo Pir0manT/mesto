@@ -2,12 +2,13 @@
 //      Модуль класса валидатора     //
 //               форм                //
 //************************************
+// TODO: Изменить стиль комментариев в формат JSDoc
 
 export class FormValidator {
-  constructor(settings, form) {
+  constructor(form, settings) {
     this._form = form
     this._settings = settings
-    this._inputList = Array.from(form.querySelectorAll(settings.inputSelector))
+    this._inputList = Array.from(this._form.querySelectorAll(settings.inputSelector))
     this._buttonSubmit = form.querySelector(settings.submitButtonSelector)
   }
 
